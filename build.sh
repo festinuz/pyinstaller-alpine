@@ -4,11 +4,7 @@ export PYTHON_VERSION=${1:-3.6}
 export ALPINE_VERSION=${2:-3.6}
 export PYINSTALLER_TAG=${3:-v3.3}
 
-REPO="festinuz/pyinstaller-alpine:$PYTHON_VERSION"
-
-if [[ "$PYTHON_VERSION" == "3.5" ]]; then
-    ALPINE_VERSION=""
-fi
+REPO="festinuz/pyinstaller-alpine:$PYTHON_VERSION-$ALPINE_VERSION"
 
 echo "python: $PYTHON_VERSION"
 echo "alpine: $ALPINE_VERSION"
