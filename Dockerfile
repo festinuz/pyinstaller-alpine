@@ -13,7 +13,6 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repos
         freetype-dev \
         fribidi-dev \
         g++ \
-        gfortran \
         git \
         harfbuzz-dev \
         jpeg-dev \
@@ -24,7 +23,6 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repos
         libzmq \
         linux-headers \
         musl-dev \
-        openblas-dev \
         openjpeg-dev \
         openssl \
         pkgconfig \
