@@ -62,7 +62,7 @@ WORKDIR /src
 ADD ./bin /pyinstaller
 RUN chmod a+x /pyinstaller/*
 
-ONBUILD COPY pyproject.* requirements.* .
+ONBUILD COPY pyproject.* poetry.* requirements.* .
 ONBUILD RUN /pyinstaller/install_requirements.sh
 
 ENTRYPOINT ["/pyinstaller/pyinstaller.sh"]
