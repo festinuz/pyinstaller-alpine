@@ -9,6 +9,7 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repos
     && apk --update --no-cache add \
         bash \
         build-base \
+        curl \
         freetype-dev \
         fribidi-dev \
         g++ \
@@ -44,6 +45,10 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repos
 RUN pip install \
     pycrypto
 
+RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python && \
+    source $HOME/.poetry/env && \
+    poetry config settings.virtualenvs.create false
+
 ARG PYINSTALLER_TAG
 
 # Build bootloader for alpine
@@ -58,5 +63,8 @@ WORKDIR /src
 
 ADD ./bin /pyinstaller
 RUN chmod a+x /pyinstaller/*
+
+ONBUILD COPY pyproject.* requirements.txt .
+ONBUILD RUN /pyinstaller/install_requirements.sh
 
 ENTRYPOINT ["/pyinstaller/pyinstaller.sh"]
