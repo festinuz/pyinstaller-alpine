@@ -1,6 +1,7 @@
 # Official Python base image is needed or some applications will segfault.
 ARG PYTHON_VERSION
 ARG ALPINE_VERSION
+
 FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
 
 # PyInstaller needs zlib-dev, gcc, libc-dev, and musl-dev
@@ -39,22 +40,9 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repos
         zlib-dev \
     && pip install --upgrade pip
 
-# Install pycrypto so --key can be used with PyInstaller
-RUN pip install \
-    pycrypto
-
 RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python && \
     source $HOME/.poetry/env && \
     poetry config settings.virtualenvs.create false
-
-ARG PYINSTALLER_TAG
-
-# Build bootloader for alpine
-RUN git clone --depth 1 --single-branch --branch ${PYINSTALLER_TAG} https://github.com/pyinstaller/pyinstaller.git /tmp/pyinstaller \
-    && cd /tmp/pyinstaller/bootloader \
-    && python ./waf configure --no-lsb all \
-    && pip install .. \
-    && rm -Rf /tmp/pyinstaller
 
 VOLUME /src
 WORKDIR /src
@@ -62,7 +50,12 @@ WORKDIR /src
 ADD ./bin /pyinstaller
 RUN chmod a+x /pyinstaller/*
 
+# Install requirements
 ONBUILD COPY pyproject.* poetry.* requirements.* ./
 ONBUILD RUN /pyinstaller/install_requirements.sh
+
+# Install pyinstaller & pycrypto
+ONBUILD RUN pip install --no-cache-dir --disable-pip-version-check pyinstaller pycrypto
+
 
 ENTRYPOINT ["/pyinstaller/pyinstaller.sh"]
