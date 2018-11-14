@@ -2,6 +2,7 @@
 
 export PYTHON_VERSION=${1:-3.6}
 export ALPINE_VERSION=${2:-3.6}
+
 REPO="festinuz/pyinstaller-alpine:$PYTHON_VERSION-$ALPINE_VERSION"
 
 echo "python: $PYTHON_VERSION"

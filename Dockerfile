@@ -54,8 +54,5 @@ RUN chmod a+x /pyinstaller/*
 ONBUILD COPY pyproject.* poetry.* requirements.* ./
 ONBUILD RUN /pyinstaller/install_requirements.sh
 
-# Install pyinstaller & pycrypto
-ONBUILD RUN pip install --no-cache-dir --disable-pip-version-check pyinstaller pycrypto
-
 
 ENTRYPOINT ["/pyinstaller/pyinstaller.sh"]

@@ -15,3 +15,13 @@ elif [ -f pyproject.toml ]; then
 else
     echo "No file specifying requirements found; No dependencies are installed"
 fi
+
+
+echo "Installing PyInstaller & pycrypto"
+git clone --depth 1 --single-branch --branch=v3.4 https://github.com/pyinstaller/pyinstaller.git /tmp/pyinstaller \
+    && cd /tmp/pyinstaller/bootloader \
+    && python ./waf configure --no-lsb all \
+    && pip install .. \
+    && cd ~ \
+    && rm -Rf /tmp/pyinstaller \
+    && pip install --no-cache-dir --disable-pip-version-check pycrypto
