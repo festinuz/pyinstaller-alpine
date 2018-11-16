@@ -9,9 +9,6 @@ elif [ -f setup.py ]; then
 elif [ -f poetry.lock ]; then
     echo "poetry.lock file found; Installing dependencies using poetry"
     source $HOME/.poetry/env && poetry install --no-dev --no-interaction
-elif [ -f pyproject.toml ]; then
-    echo "pyproject.toml file found; Trying to install dependencies using poetry"
-    source $HOME/.poetry/env && poetry install --no-dev --no-interaction
 else
     echo "No file specifying requirements found; No dependencies are installed"
 fi

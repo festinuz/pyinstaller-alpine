@@ -51,7 +51,7 @@ ADD ./bin /pyinstaller
 RUN chmod a+x /pyinstaller/*
 
 # Install requirements
-ONBUILD COPY pyproject.* poetry.* requirements.* ./
+ONBUILD COPY poetry.* requirements.* ./
 ONBUILD RUN /pyinstaller/install_requirements.sh
 
 
